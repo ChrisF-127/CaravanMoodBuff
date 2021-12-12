@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<SY_CMB.CaravanEventActive_MoodEffect>"Event" effect</SY_CMB.CaravanEventActive_MoodEffect>
+	<SY_CMB.TooltipCaravanEventActive_MoodEffect>Adjust the effect strength for the mood buff received during any caravan event.</SY_CMB.TooltipCaravanEventActive_MoodEffect>
+	
+	<SY_CMB.CaravanTraveling_MoodEffect>"Traveling" effect</SY_CMB.CaravanTraveling_MoodEffect>
+	<SY_CMB.TooltipCaravanTraveling_MoodEffect>Adjust the effect strength for the mood buff received while traveling with a caravan on the world map.</SY_CMB.TooltipCaravanTraveling_MoodEffect>
+	
+	<SY_CMB.CaravanEventSuccess_MoodEffect>"Successful event" effect</SY_CMB.CaravanEventSuccess_MoodEffect>
+	<SY_CMB.TooltipCaravanEventSuccess_MoodEffect>Adjust the effect strength for the mood buff received from successfully completing caravan events.</SY_CMB.TooltipCaravanEventSuccess_MoodEffect>
+	<SY_CMB.CaravanEventSuccess_DurationDays>"Successful event" duration</SY_CMB.CaravanEventSuccess_DurationDays>
+	<SY_CMB.TooltipCaravanEventSuccess_DurationDays>Adjust the effect duration for the mood buff received from successfully completing caravan events.</SY_CMB.TooltipCaravanEventSuccess_DurationDays>
+	
+	<SY_CMB.CaravanBattleWon_MoodEffect>"Battle won" effect</SY_CMB.CaravanBattleWon_MoodEffect>
+	<SY_CMB.TooltipCaravanBattleWon_MoodEffect>Adjust the effect strength for the mood buff received by winning a caravan battle.</SY_CMB.TooltipCaravanBattleWon_MoodEffect>
+	<SY_CMB.CaravanBattleWon_DurationDays>"Battle won" duration</SY_CMB.CaravanBattleWon_DurationDays>
+	<SY_CMB.TooltipCaravanBattleWon_DurationDays>Adjust the effect duration for the mood buff received by winning a caravan battle.</SY_CMB.TooltipCaravanBattleWon_DurationDays>
+	
+</LanguageData>

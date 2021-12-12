@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThoughtDef>
+		<defName>CaravanEventActive</defName>
+		<workerClass>CaravanMoodBuff.ThoughtWorker_CaravanEvent</workerClass>
+		<stages>
+			<li>
+				<label>caravan event</label>
+				<description>Danger may loom behind every rock and tree, threats surely are near. Fortitude and vigilance are demanded, little pleasantries can be expected in such a place!</description>
+				<baseMoodEffect>25</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>CaravanTraveling</defName>
+		<workerClass>CaravanMoodBuff.ThoughtWorker_CaravanTraveling</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<stages>
+			<li>
+				<label>traveling in a caravan</label>
+				<description>A traveler must be adamant! Few conveniences can be expected while out on the road as many dangers lurk in the wilderness.</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+
+	<ThoughtDef>
+		<defName>CaravanEventSuccess</defName>
+		<durationDays>5</durationDays>
+		<stages>
+			<li>
+				<label>successful caravan event</label>
+				<description>A successful adventure lifts the spirits of any weary traveler!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>CaravanBattleWon</defName>
+		<durationDays>2</durationDays>
+		<stages>
+			<li>
+				<label>caravan battle won</label>
+				<description>Victory may come at a cost, nonetheless any hardship overcome raises hopes and gives will to continue!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+</Defs>
