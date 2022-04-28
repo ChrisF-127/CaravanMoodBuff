@@ -4,6 +4,7 @@ using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,39 +12,64 @@ using Verse;
 
 namespace CaravanMoodBuff
 {
-	[StaticConstructorOnStartup]
-	public static class HarmonyPatches
-	{
-		static HarmonyPatches()
-		{
-			Harmony harmony = new Harmony("syrus.caravanmoodbuff");
-
-			harmony.PatchAll();
-		}
-	}
-
 	[HarmonyPatch(typeof(CaravansBattlefield), "CheckWonBattle")]
 	static class Patch_CaravansBattlefield_CheckWonBattle
 	{
-		[HarmonyPrefix]
-		public static void Prefix(CaravansBattlefield __instance, out bool __state)
+		[HarmonyTranspiler]
+		public static IEnumerable<CodeInstruction> Test(IEnumerable<CodeInstruction> instructions)
 		{
-			__state = __instance.wonBattle;
+			var appliedPatch = false;
+			//Log.Message("CheckWonBattle");
+			CodeInstruction prevInstruction = null;
+			foreach (var instruction in instructions)
+			{
+				if (!appliedPatch)
+				{
+					if (instruction.opcode == OpCodes.Ldc_I4_1)
+					{
+						prevInstruction = instruction;
+						continue;
+					}
+					else if (instruction.opcode == OpCodes.Stfld && instruction.operand?.ToString().Contains("wonBattle") == true)
+					{
+						var newInstruction = new CodeInstruction(OpCodes.Call, typeof(MapParent).GetProperty("Map", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetGetMethod(true));
+						//Log.Warning(newInstruction.ToString());
+						yield return newInstruction;
+
+						newInstruction = new CodeInstruction(OpCodes.Call, typeof(Patch_CaravansBattlefield_CheckWonBattle).GetMethod(nameof(ApplyMoodBuff), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic));
+						//Log.Warning(newInstruction.ToString());
+						yield return newInstruction;
+
+						newInstruction = new CodeInstruction(OpCodes.Ldarg_0);
+						//Log.Warning(newInstruction.ToString());
+						yield return newInstruction;
+
+						appliedPatch = true;
+					}
+
+					if (prevInstruction != null)
+					{
+						//Log.Message(prevInstruction.ToString());
+						yield return prevInstruction;
+						prevInstruction = null;
+					}
+				}
+
+				//Log.Message(instruction.ToString());
+				yield return instruction;
+			}
+
+			if (!appliedPatch)
+				Log.Error($"{nameof(CaravanMoodBuff)}: {nameof(Patch_CaravansBattlefield_CheckWonBattle)} transpiler patch could not be applied; please report this error & include a HugsLib log (CTRL+F12) !!!");
 		}
 
-		[HarmonyPostfix]
-		public static void Postfix(CaravansBattlefield __instance, bool __state)
+		public static void ApplyMoodBuff(Map map)
 		{
-			// __instance.WonBattle changed from false to true
-			if (!__state && __instance?.WonBattle == true && __instance.Map?.IsPlayerHome == false)
+			foreach (var pawn in map.mapPawns.AllPawns)
 			{
-				//Log.Message("Patch_CaravansBattlefield_CheckWonBattle");
-				foreach (var pawn in __instance.Map.mapPawns.AllPawns)
+				if (pawn?.IsColonist == true)
 				{
-					if (pawn?.IsColonist == true)
-					{
-						pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(ThoughtDefOfCaravanMoodBuff.CaravanBattleWon);
-					}
+					pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(ThoughtDefOfCaravanMoodBuff.CaravanBattleWon);
 				}
 			}
 		}
@@ -52,29 +78,51 @@ namespace CaravanMoodBuff
 	[HarmonyPatch(typeof(FormCaravanComp), "CompTick")]
 	static class Patch_FormCaravanComp_CompTick
 	{
-		[HarmonyPrefix]
-		public static void Prefix(FormCaravanComp __instance, out bool __state)
+		[HarmonyTranspiler]
+		public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
 		{
-			__state = __instance.anyActiveThreatLastTick && __instance.Reform && __instance.CanFormOrReformCaravanNow;
+			var appliedPatch = false;
+			//Log.Message("--- START ---");
+			foreach (var instruction in instructions)
+			{
+				if (!appliedPatch && instruction.opcode == OpCodes.Ldarg_0 && instruction.labels.Count == 5)
+				{
+					var last = instruction.labels.Last();
+					instruction.labels.Remove(last);
+
+					var newInstruction = new CodeInstruction(OpCodes.Ldarg_0);
+					newInstruction.labels.Add(last);
+					//Log.Warning(newInstruction.ToString());
+					yield return newInstruction;
+
+					newInstruction = new CodeInstruction(OpCodes.Call, typeof(FormCaravanComp).GetProperty("MapParent", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetGetMethod(true));
+					//Log.Warning(newInstruction.ToString());
+					yield return newInstruction;
+
+					newInstruction = new CodeInstruction(OpCodes.Call, typeof(Patch_FormCaravanComp_CompTick).GetMethod(nameof(ApplyMoodBuff), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic));
+					//Log.Warning(newInstruction.ToString());
+					yield return newInstruction;
+
+					appliedPatch = true;
+				}
+				//Log.Message(instruction.ToString());
+				yield return instruction;
+			}
+
+			if (!appliedPatch)
+				Log.Error($"{nameof(CaravanMoodBuff)}: {nameof(Patch_FormCaravanComp_CompTick)} transpiler patch could not be applied; please report this error & include a HugsLib log (CTRL+F12) !!!");
 		}
 
-		[HarmonyPostfix]
-		public static void Postfix(FormCaravanComp __instance, bool __state)
+		public static void ApplyMoodBuff(MapParent mapParent)
 		{
-			// (anyActiveThreatLastTick && Reform && CanFormOrReformCaravanNow) [=> __state] && !anyActiveThreatNow [=> !__instance.anyActiveThreatLastTick]
-			if (__state && __instance?.anyActiveThreatLastTick == false)
+			if (mapParent.GetType() != typeof(CaravansBattlefield))
 			{
-				var mapParent = __instance.MapParent;
-				if (mapParent?.Map?.IsPlayerHome == false
-					&& mapParent.GetType() != typeof(CaravansBattlefield))
+				Log.Message("Patch_FormCaravanComp_CompTick");
+				foreach (var pawn in mapParent.Map.mapPawns.AllPawns)
 				{
-					//Log.Message("Patch_FormCaravanComp_CompTick");
-					foreach (var pawn in mapParent.Map.mapPawns.AllPawns)
+					if (pawn?.IsColonist == true)
 					{
-						if (pawn?.IsColonist == true)
-						{
-							pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(ThoughtDefOfCaravanMoodBuff.CaravanEventSuccess);
-						}
+						pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(ThoughtDefOfCaravanMoodBuff.CaravanEventSuccess);
 					}
 				}
 			}
