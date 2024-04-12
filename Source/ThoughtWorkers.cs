@@ -16,9 +16,7 @@ namespace CaravanMoodBuff
 			if (p?.IsColonist == true
 				&& def.stages[0].baseMoodEffect != 0 
 				&& p.Map?.IsPlayerHome == false)
-			{
 				return ThoughtState.ActiveDefault;
-			}
 			return ThoughtState.Inactive;
 		}
 	}
@@ -30,9 +28,7 @@ namespace CaravanMoodBuff
 			if (p?.IsColonist == true
 				&& def.stages[0].baseMoodEffect != 0 
 				&& p.ParentHolder is Caravan caravan && caravan.IsPlayerControlled)
-			{
 				return ThoughtState.ActiveDefault;
-			}
 			return ThoughtState.Inactive;
 		}
 	}

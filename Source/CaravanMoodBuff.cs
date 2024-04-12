@@ -20,9 +20,7 @@ namespace CaravanMoodBuff
 		private SettingHandle<float> _caravanBattleWon_MoodEffect;
 		private SettingHandle<float> _caravanBattleWon_DurationDays;
 
-
 		public override string ModIdentifier => "CaravanMoodBuff";
-
 
 		public override void DefsLoaded()
 		{
