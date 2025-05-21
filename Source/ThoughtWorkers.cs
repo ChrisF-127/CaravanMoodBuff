@@ -14,8 +14,10 @@ namespace CaravanMoodBuff
 		public override ThoughtState CurrentStateInternal(Pawn p)
 		{
 			if (p?.IsColonist == true
-				&& def.stages[0].baseMoodEffect != 0 
-				&& p.Map?.IsPlayerHome == false)
+				&& def.stages[0].baseMoodEffect != 0
+				&& p.Map != null
+				&& !p.Map.IsPlayerHome
+				&& (!p.Map.IsPocketMap || p.Map.IsTempIncidentMap))
 				return ThoughtState.ActiveDefault;
 			return ThoughtState.Inactive;
 		}
@@ -27,7 +29,8 @@ namespace CaravanMoodBuff
 		{
 			if (p?.IsColonist == true
 				&& def.stages[0].baseMoodEffect != 0 
-				&& p.ParentHolder is Caravan caravan && caravan.IsPlayerControlled)
+				&& p.ParentHolder is Caravan caravan 
+				&& caravan.IsPlayerControlled)
 				return ThoughtState.ActiveDefault;
 			return ThoughtState.Inactive;
 		}
