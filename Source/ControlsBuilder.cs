@@ -8,7 +8,7 @@ using UnityEngine;
 using Verse;
 using Verse.Noise;
 
-namespace CaravanMoodBuff
+namespace SyControlsBuilder
 {
 	public static class ControlsBuilder
 	{
