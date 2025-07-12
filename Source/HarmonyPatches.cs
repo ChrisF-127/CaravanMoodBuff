@@ -60,7 +60,7 @@ namespace CaravanMoodBuff
 			}
 
 			if (!appliedPatch)
-				Log.Error($"{nameof(CaravanMoodBuff)}: {nameof(Patch_CaravansBattlefield_CheckWonBattle)} transpiler patch could not be applied; please report this error & include a HugsLib log (CTRL+F12) !!!");
+				Log.Error($"{nameof(CaravanMoodBuff)}: {nameof(Patch_CaravansBattlefield_CheckWonBattle)} transpiler patch could not be applied; please report this error");
 		}
 
 		public static void ApplyMoodBuff(Map map)
@@ -75,8 +75,8 @@ namespace CaravanMoodBuff
 		}
 	}
 
-	[HarmonyPatch(typeof(FormCaravanComp), "CompTick")]
-	static class Patch_FormCaravanComp_CompTick
+	[HarmonyPatch(typeof(FormCaravanComp), "CompTickInterval")]
+	static class Patch_FormCaravanComp_CompTickInterval
 	{
 		[HarmonyTranspiler]
 		public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
@@ -99,7 +99,7 @@ namespace CaravanMoodBuff
 					//Log.Warning(newInstruction.ToString());
 					yield return newInstruction;
 
-					newInstruction = new CodeInstruction(OpCodes.Call, typeof(Patch_FormCaravanComp_CompTick).GetMethod(nameof(ApplyMoodBuff), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic));
+					newInstruction = new CodeInstruction(OpCodes.Call, typeof(Patch_FormCaravanComp_CompTickInterval).GetMethod(nameof(ApplyMoodBuff), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic));
 					//Log.Warning(newInstruction.ToString());
 					yield return newInstruction;
 
@@ -110,7 +110,7 @@ namespace CaravanMoodBuff
 			}
 
 			if (!appliedPatch)
-				Log.Error($"{nameof(CaravanMoodBuff)}: {nameof(Patch_FormCaravanComp_CompTick)} transpiler patch could not be applied; please report this error & include a HugsLib log (CTRL+F12) !!!");
+				Log.Error($"{nameof(CaravanMoodBuff)}: {nameof(Patch_FormCaravanComp_CompTickInterval)} transpiler patch could not be applied; please report this error");
 		}
 
 		public static void ApplyMoodBuff(MapParent mapParent)
