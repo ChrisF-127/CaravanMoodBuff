@@ -141,7 +141,7 @@ namespace CaravanMoodBuff
 			}
 			finally
 			{
-				ControlsBuilder.End();
+				ControlsBuilder.End(offsetY);
 			}
 		}
 		#endregion
