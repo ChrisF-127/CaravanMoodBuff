@@ -118,7 +118,7 @@ namespace CaravanMoodBuff
 			if (mapParent.GetType() != typeof(CaravansBattlefield))
 			{
 				Log.Message("Patch_FormCaravanComp_CompTick");
-				foreach (var pawn in mapParent.Map.mapPawns.AllPawns)
+				foreach (var pawn in mapParent.Map.mapPawns.AllPawns.ToArray())
 				{
 					if (pawn?.IsColonist == true)
 					{
