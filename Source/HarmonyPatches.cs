@@ -32,11 +32,11 @@ namespace CaravanMoodBuff
 					}
 					else if (instruction.opcode == OpCodes.Stfld && instruction.operand?.ToString().Contains("wonBattle") == true)
 					{
-						var newInstruction = new CodeInstruction(OpCodes.Call, typeof(MapParent).GetProperty("Map", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetGetMethod(true));
+						var newInstruction = new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(MapParent), "Map"));
 						//Log.Warning(newInstruction.ToString());
 						yield return newInstruction;
 
-						newInstruction = new CodeInstruction(OpCodes.Call, typeof(Patch_CaravansBattlefield_CheckWonBattle).GetMethod(nameof(ApplyMoodBuff), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic));
+						newInstruction = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Patch_CaravansBattlefield_CheckWonBattle), nameof(ApplyMoodBuff)));
 						//Log.Warning(newInstruction.ToString());
 						yield return newInstruction;
 
@@ -95,11 +95,11 @@ namespace CaravanMoodBuff
 					//Log.Warning(newInstruction.ToString());
 					yield return newInstruction;
 
-					newInstruction = new CodeInstruction(OpCodes.Call, typeof(FormCaravanComp).GetProperty("MapParent", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetGetMethod(true));
+					newInstruction = new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(FormCaravanComp), "MapParent"));
 					//Log.Warning(newInstruction.ToString());
 					yield return newInstruction;
 
-					newInstruction = new CodeInstruction(OpCodes.Call, typeof(Patch_FormCaravanComp_CompTickInterval).GetMethod(nameof(ApplyMoodBuff), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic));
+					newInstruction = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Patch_FormCaravanComp_CompTickInterval), nameof(ApplyMoodBuff)));
 					//Log.Warning(newInstruction.ToString());
 					yield return newInstruction;
 
@@ -115,16 +115,14 @@ namespace CaravanMoodBuff
 
 		public static void ApplyMoodBuff(MapParent mapParent)
 		{
-			if (mapParent.GetType() != typeof(CaravansBattlefield))
+			if (mapParent.GetType() == typeof(CaravansBattlefield))
+				return;
+
+			//Log.Message("Patch_FormCaravanComp_CompTick -> ApplyMoodBuff");
+			foreach (var pawn in mapParent.Map.mapPawns.AllPawns.ToArray())
 			{
-				Log.Message("Patch_FormCaravanComp_CompTick");
-				foreach (var pawn in mapParent.Map.mapPawns.AllPawns)
-				{
-					if (pawn?.IsColonist == true)
-					{
-						pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(ThoughtDefOfCaravanMoodBuff.CaravanEventSuccess);
-					}
-				}
+				if (pawn?.IsColonist == true)
+					pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(ThoughtDefOfCaravanMoodBuff.CaravanEventSuccess);
 			}
 		}
 	}
