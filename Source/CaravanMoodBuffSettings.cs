@@ -92,7 +92,7 @@ namespace CaravanMoodBuff
 					CaravanEventActive_MoodEffect,
 					Default_CaravanEventActive_MoodEffect,
 					nameof(CaravanEventActive_MoodEffect),
-					0,
+					-1000f,
 					1000f);
 
 				CaravanTraveling_MoodEffect = ControlsBuilder.CreateNumeric(
@@ -103,7 +103,7 @@ namespace CaravanMoodBuff
 					CaravanTraveling_MoodEffect,
 					Default_CaravanTraveling_MoodEffect,
 					nameof(CaravanTraveling_MoodEffect),
-					0,
+					-1000f,
 					1000f);
 
 				CaravanForming_MoodEffect = ControlsBuilder.CreateNumeric(
@@ -114,7 +114,7 @@ namespace CaravanMoodBuff
 					CaravanForming_MoodEffect,
 					Default_CaravanForming_MoodEffect,
 					nameof(CaravanForming_MoodEffect),
-					0,
+					-1000f,
 					1000f);
 
 				CaravanEventSuccess_MoodEffect = ControlsBuilder.CreateNumeric(
@@ -125,7 +125,7 @@ namespace CaravanMoodBuff
 					CaravanEventSuccess_MoodEffect,
 					Default_CaravanEventSuccess_MoodEffect,
 					nameof(CaravanEventSuccess_MoodEffect),
-					0,
+					-1000f,
 					1000f);
 				CaravanEventSuccess_DurationDays = ControlsBuilder.CreateNumeric(
 					ref offsetY,
@@ -135,7 +135,7 @@ namespace CaravanMoodBuff
 					CaravanEventSuccess_DurationDays,
 					Default_CaravanEventSuccess_DurationDays,
 					nameof(CaravanEventSuccess_DurationDays),
-					0,
+					0f,
 					60f);
 
 				CaravanBattleWon_MoodEffect = ControlsBuilder.CreateNumeric(
@@ -146,7 +146,7 @@ namespace CaravanMoodBuff
 					CaravanBattleWon_MoodEffect,
 					Default_CaravanBattleWon_MoodEffect,
 					nameof(CaravanBattleWon_MoodEffect),
-					0,
+					-1000f,
 					1000f);
 				CaravanBattleWon_DurationDays = ControlsBuilder.CreateNumeric(
 					ref offsetY,
@@ -156,7 +156,7 @@ namespace CaravanMoodBuff
 					CaravanBattleWon_DurationDays,
 					Default_CaravanBattleWon_DurationDays,
 					nameof(CaravanBattleWon_DurationDays),
-					0,
+					0f,
 					60f);
 			}
 			finally
