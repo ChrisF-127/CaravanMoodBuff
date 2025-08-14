@@ -15,6 +15,7 @@ namespace CaravanMoodBuff
 		public static ThoughtDef CaravanEventSuccess;
 		public static ThoughtDef CaravanBattleWon;
 		public static ThoughtDef CaravanTraveling;
+		public static ThoughtDef CaravanForming;
 #pragma warning restore 0649
 	}
 }

@@ -26,6 +26,19 @@
 		</stages>
 	</ThoughtDef>
 
+	<ThoughtDef>
+		<defName>CaravanForming</defName>
+		<workerClass>CaravanMoodBuff.ThoughtWorker_CaravanForming</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<stages>
+			<li>
+				<label>forming caravan</label>
+				<description>AAAAAAAAAAAAAAAAAHHHHHHHHHHHHH!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
 
 	<ThoughtDef>
 		<defName>CaravanEventSuccess</defName>

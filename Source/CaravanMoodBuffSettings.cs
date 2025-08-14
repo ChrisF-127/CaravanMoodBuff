@@ -26,6 +26,13 @@ namespace CaravanMoodBuff
 			set => ThoughtDefOfCaravanMoodBuff.CaravanTraveling.stages[0].baseMoodEffect = value;
 		}
 
+		public static float Default_CaravanForming_MoodEffect { get; private set; }
+		public float CaravanForming_MoodEffect
+		{
+			get => ThoughtDefOfCaravanMoodBuff.CaravanForming.stages[0].baseMoodEffect;
+			set => ThoughtDefOfCaravanMoodBuff.CaravanForming.stages[0].baseMoodEffect = value;
+		}
+
 		public static float Default_CaravanEventSuccess_MoodEffect { get; private set; }
 		public float CaravanEventSuccess_MoodEffect
 		{
@@ -59,6 +66,8 @@ namespace CaravanMoodBuff
 			Default_CaravanEventActive_MoodEffect = ThoughtDefOfCaravanMoodBuff.CaravanEventActive.stages[0].baseMoodEffect;
 
 			Default_CaravanTraveling_MoodEffect = ThoughtDefOfCaravanMoodBuff.CaravanTraveling.stages[0].baseMoodEffect;
+
+			Default_CaravanForming_MoodEffect = ThoughtDefOfCaravanMoodBuff.CaravanForming.stages[0].baseMoodEffect;
 
 			Default_CaravanEventSuccess_MoodEffect = ThoughtDefOfCaravanMoodBuff.CaravanEventSuccess.stages[0].baseMoodEffect;
 			Default_CaravanEventSuccess_DurationDays = ThoughtDefOfCaravanMoodBuff.CaravanEventSuccess.durationDays;
@@ -94,6 +103,17 @@ namespace CaravanMoodBuff
 					CaravanTraveling_MoodEffect,
 					Default_CaravanTraveling_MoodEffect,
 					nameof(CaravanTraveling_MoodEffect),
+					0,
+					1000f);
+
+				CaravanForming_MoodEffect = ControlsBuilder.CreateNumeric(
+					ref offsetY,
+					width,
+					"SY_CMB.CaravanForming_MoodEffect".Translate(),
+					"SY_CMB.TooltipCaravanForming_MoodEffect".Translate(),
+					CaravanForming_MoodEffect,
+					Default_CaravanForming_MoodEffect,
+					nameof(CaravanForming_MoodEffect),
 					0,
 					1000f);
 
@@ -158,6 +178,10 @@ namespace CaravanMoodBuff
 			floatValue = CaravanTraveling_MoodEffect;
 			Scribe_Values.Look(ref floatValue, nameof(CaravanTraveling_MoodEffect), Default_CaravanTraveling_MoodEffect);
 			CaravanTraveling_MoodEffect = floatValue;
+
+			floatValue = CaravanForming_MoodEffect;
+			Scribe_Values.Look(ref floatValue, nameof(CaravanForming_MoodEffect), Default_CaravanForming_MoodEffect);
+			CaravanForming_MoodEffect = floatValue;
 
 			floatValue = CaravanEventSuccess_MoodEffect;
 			Scribe_Values.Look(ref floatValue, nameof(CaravanEventSuccess_MoodEffect), Default_CaravanEventSuccess_MoodEffect);

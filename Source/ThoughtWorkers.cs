@@ -29,8 +29,19 @@ namespace CaravanMoodBuff
 		{
 			if (p?.IsColonist == true
 				&& def.stages[0].baseMoodEffect != 0 
-				&& p.ParentHolder is Caravan caravan 
-				&& caravan.IsPlayerControlled)
+				&& p.IsPlayerControlledCaravanMember())
+				return ThoughtState.ActiveDefault;
+			return ThoughtState.Inactive;
+		}
+	}
+
+	public class ThoughtWorker_CaravanForming : ThoughtWorker
+	{
+		public override ThoughtState CurrentStateInternal(Pawn p)
+		{
+			if (p?.IsColonist == true
+				&& def.stages[0].baseMoodEffect != 0 
+				&& p.IsFormingCaravan())
 				return ThoughtState.ActiveDefault;
 			return ThoughtState.Inactive;
 		}

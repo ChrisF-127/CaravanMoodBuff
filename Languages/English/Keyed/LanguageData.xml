@@ -7,6 +7,9 @@
 	<SY_CMB.CaravanTraveling_MoodEffect>"Traveling" effect</SY_CMB.CaravanTraveling_MoodEffect>
 	<SY_CMB.TooltipCaravanTraveling_MoodEffect>Adjust the effect strength for the mood buff received while traveling with a caravan on the world map.</SY_CMB.TooltipCaravanTraveling_MoodEffect>
 	
+	<SY_CMB.CaravanForming_MoodEffect>"Forming" effect</SY_CMB.CaravanForming_MoodEffect>
+	<SY_CMB.TooltipCaravanForming_MoodEffect>Adjust the effect strength for the mood buff received while forming a caravan.</SY_CMB.TooltipCaravanForming_MoodEffect>
+	
 	<SY_CMB.CaravanEventSuccess_MoodEffect>"Successful event" effect</SY_CMB.CaravanEventSuccess_MoodEffect>
 	<SY_CMB.TooltipCaravanEventSuccess_MoodEffect>Adjust the effect strength for the mood buff received from successfully completing caravan events.</SY_CMB.TooltipCaravanEventSuccess_MoodEffect>
 	<SY_CMB.CaravanEventSuccess_DurationDays>"Successful event" duration</SY_CMB.CaravanEventSuccess_DurationDays>

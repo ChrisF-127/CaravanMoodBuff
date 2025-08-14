@@ -16,7 +16,7 @@ namespace CaravanMoodBuff
 	static class Patch_CaravansBattlefield_CheckWonBattle
 	{
 		[HarmonyTranspiler]
-		public static IEnumerable<CodeInstruction> Test(IEnumerable<CodeInstruction> instructions)
+		public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
 		{
 			var appliedPatch = false;
 			//Log.Message("CheckWonBattle");
@@ -32,7 +32,7 @@ namespace CaravanMoodBuff
 					}
 					else if (instruction.opcode == OpCodes.Stfld && instruction.operand?.ToString().Contains("wonBattle") == true)
 					{
-						var newInstruction = new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(MapParent), "Map"));
+						var newInstruction = new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(MapParent), nameof(MapParent.Map)));
 						//Log.Warning(newInstruction.ToString());
 						yield return newInstruction;
 
@@ -95,7 +95,7 @@ namespace CaravanMoodBuff
 					//Log.Warning(newInstruction.ToString());
 					yield return newInstruction;
 
-					newInstruction = new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(FormCaravanComp), "MapParent"));
+					newInstruction = new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(FormCaravanComp), nameof(FormCaravanComp.MapParent)));
 					//Log.Warning(newInstruction.ToString());
 					yield return newInstruction;
 
